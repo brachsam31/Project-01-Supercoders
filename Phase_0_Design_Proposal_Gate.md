@@ -70,6 +70,11 @@ The Linked List is a simple class that supports both singly-linked and Doubly-Li
 - HashMap(const HashMap<K,V>&) — Copy constructor — new bucket array, deep copies every chain.
 - operator=(const HashMap<K,V>&) — Copy assignment — self-assignment safe deep copy.
 
+## Section 2
+### Dynamic Array and Linked List
+![](image.png)
+### Hash Map
+![alt text](image-1.png)
 
 ## Section 3
 ### DynamicArray Complexity Estimates
