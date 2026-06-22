@@ -1,4 +1,7 @@
 #include <iostream>
+#include <sstream> // Needed to parse a line of multiple inputs
+#include <string>
+
 using namespace std;
 
 template<typename T>
@@ -45,7 +48,7 @@ public:
     }
 
     // Remove a specific value from the array
-    void removeValue(T value) {
+    bool removeValue(T value) {
         int indexToRemove = -1;
 
         // Search for the value in the array
@@ -58,8 +61,7 @@ public:
 
         // If the value wasn't found
         if (indexToRemove == -1) {
-            cout << "Error: Value " << value << " not found in the array." << endl;
-            return;
+            return false;
         }
 
         // Shift elements to the left to fill the gap
@@ -68,7 +70,7 @@ public:
         }
 
         n--; // Reduce size
-        cout << "Successfully removed " << value << endl;
+        return true;
     }
 
     // Display array
@@ -90,30 +92,55 @@ public:
 int main() {
     DynamicArray<int> arr;
     int choice;
+    string inputLine;
     int element;
 
     do {
         cout << "\n--- Dynamic Array Menu ---" << endl;
-        cout << "1. Append Element" << endl;
-        cout << "2. Remove Element by Value" << endl;
+        cout << "1. Append Multiple Elements" << endl;
+        cout << "2. Remove Multiple Elements" << endl;
         cout << "3. Display Array" << endl;
         cout << "4. Exit" << endl;
-        cout << "Enter your choice between 1-4: ";
+        cout << "Enter your choice: ";
         cin >> choice;
+        
+        // Clear the input buffer to safely use getline later
+        cin.ignore(); 
 
         switch (choice) {
-            case 1:
-                cout << "Enter integer value to append: ";
-                cin >> element;
-                arr.append(element);
-                cout << element << " appended successfully." << endl;
+            case 1: {
+                cout << "Enter integer values separated by spaces (e.g., 10 20 30): " << endl;
+                getline(cin, inputLine);
+                
+                // Use stringstream to read numbers one by one from the input line
+                stringstream ss(inputLine);
+                int count = 0;
+                while (ss >> element) {
+                    arr.append(element);
+                    count++;
+                }
+                cout << "Successfully appended " << count << " element(s)." << endl;
                 break;
+            }
 
-            case 2:
-                cout << "Enter integer value to remove: ";
-                cin >> element;
-                arr.removeValue(element);
+            case 2: {
+                cout << "Enter integer values to remove separated by spaces (e.g., 20 40): " << endl;
+                getline(cin, inputLine);
+                
+                stringstream ss(inputLine);
+                int successCount = 0;
+                int failCount = 0;
+                while (ss >> element) {
+                    if (arr.removeValue(element)) {
+                        successCount++;
+                    } else {
+                        cout << "Warning: Value " << element << " not found in array." << endl;
+                        failCount++;
+                    }
+                }
+                cout << "Removed " << successCount << " element(s). Missed " << failCount << " element(s)." << endl;
                 break;
+            }
 
             case 3:
                 cout << "\nCurrent Array Status:" << endl;
