@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.15)
+
+project(CollectionsLibrary)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Header search paths
+include_directories(
+    src/DynamicArray
+    src/LinkedList
+    src/HashMap
+    src/RedisLite
+)
+
+# Dynamic Array
+add_executable(
+    DynamicArray
+    src/DynamicArray/Dynamicmain.cpp
+)
+
+# Linked List
+add_executable(
+    LinkedList
+    src/LinkedList/Linkedmain.cpp
+)
+
+# HashMap
+add_executable(
+    HashMap
+    src/HashMap/hmap.cpp
+)
+
+# Redis Lite
+add_executable(
+    RedisLite
+    src/RedisLite/Redismain.cpp
+)

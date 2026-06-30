@@ -1,3 +1,4 @@
+#pragma once
 #include <iostream>
 #include <cstdlib>
 using namespace std;
@@ -124,6 +125,11 @@ public:
             error("get: index out of range");
         return arr[index];
     }
+    const T& get(int index) const {
+        if (index < 0 || index >= n)
+            error("get: index out of range");
+        return arr[index];
+    }
 
     void print() const {
         cout << "[ ";
@@ -132,48 +138,3 @@ public:
         cout << "]  size=" << n << "  cap=" << cap << "\n";
     }
 };
-
-
-int main() {
-
-    cout << "-- append --\n";
-    DynamicArray<int> a;
-    a.append(10); a.append(20); a.append(30); a.append(40);
-    a.print();        // cap=4, full
-    a.append(50);     // triggers resize to cap=8
-    a.print();
-
-    cout << "\n-- insert --\n";
-    a.insert(0, 99);         a.print();   // front
-    a.insert(3, 77);         a.print();   // middle
-    a.insert(a.size(), 55);  a.print();   // end
-
-    cout << "\n-- remove --\n";
-    a.remove(0);             a.print();   // front
-    a.remove(2);             a.print();   // middle
-    a.remove(a.size() - 1);  a.print();   // last
-
-    cout << "\n-- get --\n";
-    cout << "get(0) = " << a.get(0) << "\n";
-    cout << "get(2) = " << a.get(2) << "\n";
-
-    cout << "\n-- copy constructor --\n";
-    DynamicArray<int> b(a);
-    b.print();
-
-    cout << "\n-- copy assignment --\n";
-    DynamicArray<int> c;
-    c = a;
-    c.print();
-
-    cout << "\n-- string type --\n";
-    DynamicArray<string> s;
-    s.append("hello");
-    s.append("world");
-    s.insert(1, "there");
-    s.print();
-    s.remove(0);
-    s.print();
-
-    return 0;
-}
